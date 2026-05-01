@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quintessen | productivity workspace</title>
+  <meta name="description" content="Quintessen – gamified productivity workspace with habit tracking and a reward shop.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- Top bar: logo + coins + reset -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="logo-mark">✦</span>
+      <span class="logo-text">Quintessen</span>
+      <span class="logo-sub">workspace</span>
+    </div>
+    <div class="topbar-right">
+      <div class="coin-badge" id="topbar-coins">
+        🪙 <span id="topbar-coin-amount">0</span>
+        <span class="coin-label">credits</span>
+      </div>
+      <button class="reset-btn" id="reset-week-btn">← RESET THE WEEK →</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+
+    <!-- Main Column -->
+    <div class="main-column">
+
+      <!-- 4-Quadrant resizable layout -->
+      <div class="quad-container" id="quad-container">
+
+        <!-- Top Row -->
+        <div class="quad-row" id="quad-top">
+          <div class="quad-panel quad-left" id="q-habits">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="section-title-group">
+                  <span class="section-icon">⚔</span>
+                  <h1>Daily Commissions</h1>
+                  <span class="section-count" id="habit-count"></span>
+                </div>
+                <button class="add-btn" id="add-habit-btn">+ New habit</button>
+              </div>
+              <div class="task-list-header">
+                <span>icon</span><span>☐ habit</span><span>⚲ reward</span>
+                <span style="padding-left:4px;">☑ M &nbsp;&nbsp;&nbsp; T &nbsp;&nbsp;&nbsp; W &nbsp;&nbsp;&nbsp; T &nbsp;&nbsp;&nbsp; F &nbsp;&nbsp;&nbsp; S &nbsp;&nbsp;&nbsp; S</span>
+                <span></span>
+              </div>
+              <div id="habits-list" class="task-list">
+                <div class="empty-state" id="habits-empty">
+                  <span class="empty-icon">📋</span>
+                  <p>No habits yet — click <strong>+ New habit</strong>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quad-vdivider" id="quad-vdivider" title="Drag to resize columns"></div>
+
+          <div class="quad-panel quad-right" id="q-tasks">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="section-title-group">
+                  <span class="section-icon">📝</span>
+                  <h2>Tasks</h2>
+                  <span class="section-count" id="task-count"></span>
+                </div>
+                <button class="add-btn" id="add-task-btn">+ New task</button>
+              </div>
+              <div class="tasks-list-header">
+                <span>icon</span><span>☐ task</span><span>⚲ reward</span>
+                <span># done</span><span></span><span></span>
+              </div>
+              <div id="tasks-list" class="tasks-list">
+                <div class="empty-state" id="tasks-empty">
+                  <span class="empty-icon">📝</span>
+                  <p>No tasks yet — click <strong>+ New task</strong>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal divider -->
+        <div class="quad-hdivider" id="quad-hdivider" title="Drag to resize rows">
+          <div class="quad-tetra-handle" id="quad-tetra-handle" title="Drag in any direction"></div>
+        </div>
+
+        <!-- Bottom Row -->
+        <div class="quad-row" id="quad-bottom">
+          <div class="quad-panel quad-left" id="q-skills">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="section-title-group">
+                  <span class="section-icon">🧠</span>
+                  <h2>Skills</h2>
+                  <span class="section-count" id="skill-count"></span>
+                </div>
+                <button class="add-btn" id="add-skill-section-btn">+ New skill</button>
+              </div>
+              <div class="skills-list-header">
+                <span>icon</span><span>☐ skill</span><span>⇡ category</span>
+                <span>⚲ value</span><span>▶ log it</span><span></span>
+              </div>
+              <div id="skills-list" class="skills-list">
+                <div class="empty-state" id="skills-empty">
+                  <span class="empty-icon">🧠</span>
+                  <p>No skills yet — click <strong>+ New skill</strong>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quad-vdivider quad-vdivider-bot" id="quad-vdivider-bot" title="Drag to resize columns"></div>
+
+          <div class="quad-panel quad-right" id="q-shop">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="section-title-group">
+                  <span class="section-icon">🛒</span>
+                  <h2>Habit Shop</h2>
+                  <span class="section-count" id="shop-count"></span>
+                </div>
+                <button class="add-btn" id="add-shop-item-btn">+ New item</button>
+              </div>
+              <div class="shop-list-header">
+                <span>icon</span><span>☐ item</span><span># qty</span>
+                <span>⚲ price</span><span>🛒</span><span></span>
+              </div>
+              <div id="shop-list" class="shop-list">
+                <div class="empty-state" id="shop-empty">
+                  <span class="empty-icon">🎪</span>
+                  <p>No rewards yet — click <strong>+ New item</strong>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /quad-container -->
+
+
+    </div><!-- /main-column -->
+
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <!-- Bank -->
+      <div class="bank-section">
+        <div class="bank-header">
+          <span>🏛️</span>
+          <span>bank</span>
+        </div>
+        <div class="invoice-box">
+          <div class="invoice-header">
+            <span>📄 Invoice</span>
+          </div>
+          <div class="invoice-totals">
+            Total: <span class="credit-chip" id="bank-total">0 credits 💵</span>
+          </div>
+          <div class="bank-log" id="bank-history">
+            <div class="log-empty">No transactions yet.</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="sidebar-nav">
+        <label class="nav-item">
+          <span class="nav-icon">📂</span>
+          <span>Import Data</span>
+          <input type="file" id="import-state-input" accept=".json" style="display:none;">
+        </label>
+
+        <div class="nav-item" id="download-state-btn" style="cursor:pointer;">
+          <span class="nav-icon">💾</span>
+          <span>Download Data</span>
+        </div>
+        
+        <a href="https://github.com/QuintessenLabs/quintessens-productivity-app" target="_blank" class="nav-item">
+          <span class="nav-icon">🐙</span>
+          <span>Source Code</span>
+        </a>
+
+        <div class="nav-item" id="generate-fake-data" style="cursor:pointer;">
+          <span class="nav-icon">✨</span>
+          <span>Generate Fake Data</span>
+        </div>
+
+        <div class="nav-item" id="reset-state-btn" style="cursor:pointer; color: var(--red);">
+          <span class="nav-icon">🗑️</span>
+          <span>Reset All Data</span>
+        </div>
+      </div>
+
+    </div><!-- /sidebar -->
+  </div><!-- /workspace -->
+</div><!-- /app-shell -->
+
+<!-- ===================== MODALS ===================== -->
+
+<!-- Habit Modal -->
+<div id="task-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>New Task</h3>
+      <button class="modal-close" data-close="task-modal">&#10005;</button>
+    </div>
+    <div class="emoji-field">
+      <label class="field-label">Emoji Icon</label>
+      <div class="emoji-trigger-row">
+        <button class="emoji-trigger" id="task-emoji-trigger">&#128221;</button>
+        <span class="emoji-trigger-hint">click to pick an emoji</span>
+      </div>
+    </div>
+    <label class="field-label">Task Name</label>
+    <input class="modal-input" type="text" id="task-name-input" placeholder="e.g. Study physics for 1 hour">
+    <label class="field-label">Reward (credits)</label>
+    <input class="modal-input" type="number" id="task-price-input" placeholder="e.g. 10" min="1">
+    <div class="modal-actions">
+      <button class="btn btn-cancel" data-close="task-modal">Cancel</button>
+      <button class="btn btn-primary" id="save-task-btn">Save Task</button>
+    </div>
+  </div>
+</div>
+
+<div id="habit-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>New Habit</h3>
+      <button class="modal-close" data-close="habit-modal">✕</button>
+    </div>
+
+    <div class="emoji-field">
+      <label class="field-label">Emoji Icon</label>
+      <div class="emoji-trigger-row">
+        <button class="emoji-trigger" id="habit-emoji-trigger">✏️</button>
+        <span class="emoji-trigger-hint">click to pick an emoji</span>
+      </div>
+    </div>
+
+    <label class="field-label">Habit Name</label>
+    <input class="modal-input" type="text" id="habit-name-input" placeholder="e.g. Read for 30 minutes">
+
+    <label class="field-label">Category / Attribute</label>
+    <select class="modal-input" id="habit-attr-input">
+      <option value="health">💪 health</option>
+      <option value="academic">📚 academic</option>
+      <option value="passion">🎨 passion</option>
+      <option value="social">🤝 social</option>
+      <option value="bad">⚠️ bad habit (deduct coins)</option>
+    </select>
+
+    <label class="field-label">Reward in credits</label>
+    <input class="modal-input" type="number" id="habit-price-input" placeholder="e.g. 10" min="1">
+
+    <div class="modal-actions">
+      <button class="btn btn-cancel" data-close="habit-modal">Cancel</button>
+      <button class="btn btn-primary" id="save-habit-btn">Save Habit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Shop Item Modal -->
+<div id="shop-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>New Shop Item</h3>
+      <button class="modal-close" data-close="shop-modal">✕</button>
+    </div>
+
+    <div class="emoji-field">
+      <label class="field-label">Emoji Icon</label>
+      <div class="emoji-trigger-row">
+        <button class="emoji-trigger" id="shop-emoji-trigger">🎁</button>
+        <span class="emoji-trigger-hint">click to pick an emoji</span>
+      </div>
+    </div>
+
+    <label class="field-label">Item Name</label>
+    <input class="modal-input" type="text" id="shop-name-input" placeholder="e.g. Ice Cream">
+
+    <label class="field-label">Description</label>
+    <input class="modal-input" type="text" id="shop-desc-input" placeholder="e.g. One scoop treat">
+
+    <label class="field-label">Cost (credits)</label>
+    <input class="modal-input" type="number" id="shop-price-input" placeholder="e.g. 20" min="1">
+
+    <label class="field-label">Amount / Quantity</label>
+    <input class="modal-input" type="number" id="shop-amount-input" placeholder="e.g. 1" min="1" value="1">
+
+    <div class="modal-actions">
+      <button class="btn btn-cancel" data-close="shop-modal">Cancel</button>
+      <button class="btn btn-primary" id="save-shop-btn">Save Item</button>
+    </div>
+  </div>
+</div>
+
+<!-- AI Modal -->
+<div id="ai-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🤖 Quintessen AI Evaluation</h3>
+      <button class="modal-close" data-close="ai-modal">✕</button>
+    </div>
+    <label class="field-label">Task to Propose</label>
+    <input class="modal-input" type="text" id="ai-task-input" placeholder="e.g. Complete a coding project">
+    <div class="modal-actions" id="ai-initial-actions">
+      <button class="btn btn-cancel" data-close="ai-modal">Cancel</button>
+      <button class="btn btn-primary" id="submit-ai-btn">Consult AI</button>
+    </div>
+    <div id="ai-loading" class="ai-loading" style="display:none;">🧠 AI is thinking...</div>
+    <div id="ai-result" style="display:none;">
+      <div class="ai-result-box">
+        <p id="ai-reasoning"></p>
+        <p id="ai-suggested-price" class="ai-price"></p>
+      </div>
+      <button class="btn btn-primary" id="accept-ai-btn" style="width:100%; margin-top:10px;">Accept Proposal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Skill Modal -->
+<div id="skill-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>New Skill</h3>
+      <button class="modal-close" data-close="skill-modal">✕</button>
+    </div>
+
+    <div class="emoji-field">
+      <label class="field-label">Emoji Icon</label>
+      <div class="emoji-trigger-row">
+        <button class="emoji-trigger" id="skill-emoji-trigger">🧠</button>
+        <span class="emoji-trigger-hint">click to pick an emoji</span>
+      </div>
+    </div>
+
+    <label class="field-label">Skill Name</label>
+    <input class="modal-input" type="text" id="skill-name-input" placeholder="e.g. Piano practice, Coding session">
+
+    <label class="field-label">Category</label>
+    <select class="modal-input" id="skill-attr-input">
+      <option value="health">💪 health</option>
+      <option value="academic">📚 academic</option>
+      <option value="passion">🎨 passion</option>
+      <option value="social">🤝 social</option>
+    </select>
+
+    <label class="field-label">Credits per session</label>
+    <input class="modal-input" type="number" id="skill-price-input" placeholder="e.g. 15" min="1">
+
+    <div class="modal-actions">
+      <button class="btn btn-cancel" data-close="skill-modal">Cancel</button>
+      <button class="btn btn-primary" id="save-skill-btn">Save Skill</button>
+    </div>
+  </div>
+</div>
+
+<!-- Emoji Picker Modal -->
+<div id="emoji-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <h3>Choose an Emoji</h3>
+      <button class="modal-close" data-close="emoji-modal">✕</button>
+    </div>
+    <input class="modal-input" type="text" id="emoji-search" placeholder="search...">
+    <div class="emoji-categories" id="emoji-categories"></div>
+    <div class="emoji-grid" id="emoji-grid"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
